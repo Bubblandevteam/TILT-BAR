@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import OSLog
 import AppTrackingTransparency
 import AdSupport
 @main
@@ -14,9 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+    var window: UIWindow?
+    
+    private var log = OSLog(subsystem: ConstantsLog.subSystem, category: ConstantsLog.categoryAppDelegate)
+    func requestIDFA() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                // Tracking authorization completed. Start loading ads here.
+                // loadAd()
+            })
+        } else {
+            // Fallback on earlier versions
+        }
     }
 
     // MARK: UISceneSession Lifecycle
